@@ -1,8 +1,10 @@
+import { resolve } from "url";
+
 const https = require("https");
 const cheerio = require('cheerio')
 
 
-let req = https.get("https://en.wikipedia.org/wiki/Special:RecentChanges?goodfaith=likelygood&hidecategorization=1&hideWikibase=1&limit=50&days=0.04166&urlversion=2",
+let req = https.get("https://en.wikipedia.org/wiki/Special:RecentChanges?goodfaith=likelygood&hidecategorization=1&hideWikibase=1&limit=500&days=0.04166&urlversion=2",
 (res) => {
     console.log('statusCode:', res.statusCode);
     //console.log('headers:', res.headers);
@@ -15,20 +17,17 @@ let req = https.get("https://en.wikipedia.org/wiki/Special:RecentChanges?goodfai
 
     res.on('end', () => {
         
-        // console.log(page);
-        // console.log("all data recieved");
-        // console.log(x);
-
-        parse1(page)
+        getList(page)
         
 
     });
 
 })
 
-function parse1 (page) {
+function getList (page) {
+
+    new Promise((resolve, reject) => {
     const $ = cheerio.load(page);
-    //console.log(page);
 
     console.log($('.special').text());
 
@@ -43,16 +42,11 @@ function parse1 (page) {
         maxList[x]['title'] = list[x].attribs.title;
         maxList[x]['diffLink'] = list[x].attribs.href;
 
-        // console.log(list[x])
+        
         }
     }
 
-    console.log(maxList);
-
-    // $('mw-changeslist-diff').each((i, x) => {
-    //     console.log("i: " + i + " elem: " + x);
-    // })
-
+    resolve(maxList);
     
-
+    })
 }
