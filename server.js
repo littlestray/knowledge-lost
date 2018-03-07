@@ -1,5 +1,3 @@
-import { resolve } from "url";
-
 const https = require("https");
 const cheerio = require('cheerio')
 
