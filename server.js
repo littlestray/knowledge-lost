@@ -1,5 +1,7 @@
 const https = require("https");
-const cheerio = require('cheerio')
+const cheerio = require('cheerio');
+
+console.log("Stream starting");
 
 
 let req = https.get("https://en.wikipedia.org/wiki/Special:RecentChanges?goodfaith=likelygood&hidecategorization=1&hideWikibase=1&limit=500&days=0.04166&urlversion=2",
