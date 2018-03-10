@@ -1,3 +1,4 @@
+const http = require("http");
 const https = require("https");
 const cheerio = require('cheerio');
 
@@ -87,37 +88,70 @@ function getList(page) {
     })
 }
 
-function getKnowledgeLost(page){
+function getKnowledgeLost(page) {
 
-    
+
     const $ = cheerio.load(page);
 
     let tds = $("td.diff-deletedline");
+    let dels = "";
 
-    for(let x = 0; x < tds.length; x++){
+    for (let x = 0; x < tds.length; x++) {
         //console.log(x);
-        if(tds[x].firstChild != null && tds[x].firstChild.children.length > 1){
+        if (tds[x].firstChild != null && tds[x].firstChild.children.length > 1) {
             cellCont = tds[x].firstChild.children;
 
-            for(y in cellCont){
-                if(cellCont[y].type == "tag" && cellCont[y].name == "del"){
-                    console.log("INLINE: " + cellCont[y].firstChild.data);
+            for (y in cellCont) {
+                if (cellCont[y].type == "tag" && cellCont[y].name == "del") {
+                    
+                    //console.log("INLINE: " + cellCont[y].firstChild.data);
+
+                    dels += "\t..." + cellCont[y].firstChild.data + "...";
+                    
                 }
             }
-           
+        } else if (tds[x].firstChild != null && tds[x].firstChild.children.length == 1) {
+            
+            //console.log("WHOLE: " + tds[x].firstChild.firstChild.data);
 
-        } else if (tds[x].firstChild != null && tds[x].firstChild.children.length == 1){
-            console.log("WHOLE: " + tds[x].firstChild.firstChild.data);
+            dels += "\n" + tds[x].firstChild.firstChild.data;
+
         } else {
-            console.log("NULL")
+
+            //console.log("NULL")
+            
+            dels += "\n_______________\n";
+
         }
-        
+
     }
 
-    
+    console.log(dels);
 
-    
+    const options = {
+        hostname: 'localhost',
+        port: 3666,
+        path: '',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain',
+            'Content-Length': Buffer.byteLength(dels)
+        }
+    };
 
+    const req = http.request(options, (res) => {
+
+        res.on('end', () => {
+            
+
+        })
+
+        res.on('error', (e) => {
+            console.log(e.name);
+        })
+    })
+    req.write(new Buffer(dels));
+    req.end;
 
 }
 
@@ -126,18 +160,22 @@ function processNegList(list) {
         for (x in list) {
             let req = https.get("https://en.wikipedia.org" + list[x], (res) => {
                 //console.log('statusCode:' + res.statusCode + " " + x);
-                
+
                 let page = "";
                 res.on('data', (d) => {
-                    
+
                     page += d.toString();
 
                 })
 
                 res.on('end', () => {
                     console.log(res.req._header);
-                    getKnowledgeLost(page);
+                    resolve(getKnowledgeLost(page));
 
+                })
+
+                res.on('error', (e) => {
+                    reject(e);
                 })
 
             })
