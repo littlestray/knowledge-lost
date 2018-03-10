@@ -21,6 +21,14 @@ let req = https.get("https://en.wikipedia.org/wiki/Special:RecentChanges?goodfai
 
             getList(page).then((x) => {
                 console.log(x);
+
+                processNegList(x.neg)
+
+
+
+
+
+
             }).catch((x) => {
                 console.error("getList ERR then:" + x);
             });
@@ -35,24 +43,24 @@ function getList(page) {
     return new Promise((resolve, reject) => {
         const $ = cheerio.load(page);
 
-       
-        
+
+
 
         //console.log($('.special').text());
-        
+
         let pos = $(".mw-plusminus-pos");
         let neg = $(".mw-plusminus-neg");
         let changes = {};
-        changes["pos"] = {} ;
-        changes["neg"] = {} ;
+        changes["pos"] = {};
+        changes["neg"] = {};
         for (x in pos) {
-            if(x > 0){
-    
-            let temp =  pos[x].parent.children.filter((x) => {return !(x.attribs == null)});
-            let tempTitle = temp[0].attribs.title;
-            let tempHref = temp[0].attribs.href;
-            
-            changes["pos"][tempTitle] = tempHref;
+            if (x > 0) {
+
+                let temp = pos[x].parent.children.filter((x) => { return !(x.attribs == null) });
+                let tempTitle = temp[0].attribs.title;
+                let tempHref = temp[0].attribs.href;
+
+                changes["pos"][tempTitle] = tempHref;
 
             }
 
@@ -60,12 +68,12 @@ function getList(page) {
         }
 
         for (x in neg) {
-            if( !(neg[x].parent == undefined || neg[x].parent.children == undefined)){
-            let temp =  neg[x].parent.children.filter((x) => {return !(x.attribs == null)});
-            let tempTitle = temp[0].attribs.title;
-            let tempHref = temp[0].attribs.href;
-            
-            changes["neg"][tempTitle] = tempHref;
+            if (!(neg[x].parent == undefined || neg[x].parent.children == undefined)) {
+                let temp = neg[x].parent.children.filter((x) => { return !(x.attribs == null) });
+                let tempTitle = temp[0].attribs.title;
+                let tempHref = temp[0].attribs.href;
+
+                changes["neg"][tempTitle] = tempHref;
             }
         }
 
@@ -73,8 +81,69 @@ function getList(page) {
 
         resolve(changes);
 
-       
-        
+
+
 
     })
+}
+
+function getKnowledgeLost(page){
+
+    
+    const $ = cheerio.load(page);
+
+    let tds = $("td.diff-deletedline");
+
+    for(let x = 0; x < tds.length; x++){
+        //console.log(x);
+        if(tds[x].firstChild != null && tds[x].firstChild.children.length > 1){
+            cellCont = tds[x].firstChild.children;
+
+            for(y in cellCont){
+                if(cellCont[y].type == "tag" && cellCont[y].name == "del"){
+                    console.log("INLINE: " + cellCont[y].firstChild.data);
+                }
+            }
+           
+
+        } else if (tds[x].firstChild != null && tds[x].firstChild.children.length == 1){
+            console.log("WHOLE: " + tds[x].firstChild.firstChild.data);
+        } else {
+            console.log("NULL")
+        }
+        
+    }
+
+    
+
+    
+
+
+}
+
+function processNegList(list) {
+    return new Promise((resolve, reject) => {
+        for (x in list) {
+            let req = https.get("https://en.wikipedia.org" + list[x], (res) => {
+                //console.log('statusCode:' + res.statusCode + " " + x);
+                
+                let page = "";
+                res.on('data', (d) => {
+                    
+                    page += d.toString();
+
+                })
+
+                res.on('end', () => {
+                    console.log(res.req._header);
+                    getKnowledgeLost(page);
+
+                })
+
+            })
+            //console.log("listing!");
+
+        }
+    })
+
 }
