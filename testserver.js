@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use(bodyParser.text());
+
+app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
     res.send("Success!");
