@@ -2,7 +2,7 @@
 	"name" : "KnowledgeLost",
 	"version" : 1,
 	"creationdate" : -690924958,
-	"modificationdate" : -690924909,
+	"modificationdate" : -690924116,
 	"viewrect" : [ 532.0, 85.0, 576.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -23,12 +23,12 @@
 ,
 			"jituldl.maxpat" : 			{
 				"kind" : "patcher",
-				"singleton" : 				{
-					"bootpath" : "~/Desktop/code projects/KnowledgeLost",
-					"projectrelativepath" : ".."
-				}
-
+				"local" : 1
 			}
+
+		}
+,
+		"externals" : 		{
 
 		}
 
