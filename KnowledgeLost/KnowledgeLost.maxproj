@@ -1,7 +1,8 @@
 {
 	"name" : "KnowledgeLost",
 	"version" : 1,
-	"modificationdate" : -690925069,
+	"creationdate" : -690925120,
+	"modificationdate" : -690924922,
 	"viewrect" : [ 25.0, 70.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -44,7 +45,7 @@
 
 	}
 ,
-	"detailsvisible" : 0,
+	"detailsvisible" : 1,
 	"amxdtype" : 1633771873,
 	"readonly" : 0,
 	"devpathtype" : 0,
