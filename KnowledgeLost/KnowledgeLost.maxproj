@@ -1,8 +1,9 @@
 {
 	"name" : "KnowledgeLost",
 	"version" : 1,
-	"modificationdate" : -690925069,
-	"viewrect" : [ 25.0, 70.0, 300.0, 500.0 ],
+	"creationdate" : -690924958,
+	"modificationdate" : -690924909,
+	"viewrect" : [ 532.0, 85.0, 576.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
 	"showdependencies" : 1,
@@ -12,25 +13,22 @@
 			"knowLostC.maxpat" : 			{
 				"kind" : "patcher",
 				"local" : 1,
-				"toplevel" : 1,
+				"toplevel" : 1
+			}
+,
+			"knowLostJ.maxpat" : 			{
+				"kind" : "patcher",
+				"local" : 1
+			}
+,
+			"jituldl.maxpat" : 			{
+				"kind" : "patcher",
 				"singleton" : 				{
-					"bootpath" : "~/Documents/GitHub/knowledge-lost",
+					"bootpath" : "~/Desktop/code projects/KnowledgeLost",
 					"projectrelativepath" : ".."
 				}
 
 			}
-,
-			"knowLostJ.maxpat" : 			{
-				"kind" : "patcher"
-			}
-,
-			"jituldl.maxpat" : 			{
-				"kind" : "patcher"
-			}
-
-		}
-,
-		"externals" : 		{
 
 		}
 
