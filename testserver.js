@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
     res.send("Success!");
+
     console.log(req.body);
 })
 
