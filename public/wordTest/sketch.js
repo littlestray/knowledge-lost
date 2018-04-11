@@ -10,26 +10,28 @@ function preload() {
 }
 
 function setup() {
-createCanvas(windowWidth, windowHeight);
-wordSystem = new WordSystem();
-background(0);
+  createCanvas(windowWidth, windowHeight);
+  wordSystem = new WordSystem();
+  background(0);
 
-var socket = io.connect('http://localhost:2222');
-   socket.on('connect', function(data) {
-       socket.emit('join', 'Hello World from client');
-       socket.on('deletions', socketUpdate);
-   });
+  var socket = io.connect('http://localhost:2222');
+  socket.on('connect', function (data) {
+    socket.emit('join', 'Hello World from client');
+    socket.on('deletions', socketUpdate);
+  });
 
 }
 
 
-function socketUpdate(obj){
-var Thelist = Object.keys(obj);
-
-   for (var i = 0; i < obj[Thelist[0]].length; i++) {
-     if(obj[Thelist[0]][i]){
-       wordSystem.addWord(obj[Thelist[0]][i]);
-     }
+function socketUpdate(obj) {
+  var Thelist = Object.keys(obj);
+  console.log(wordSystem.words.length);
+  for (var i = 0; i < obj[Thelist[0]].length; i++) {
+    if (obj[Thelist[0]][i]) {
+      if (wordSystem.words.length < 1000) {
+        wordSystem.addWord(obj[Thelist[0]][i], i);
+      }
+    }
   }
 
 
@@ -37,39 +39,56 @@ var Thelist = Object.keys(obj);
 
 }
 function mousePressed() {
+  // The fullscreen was making debugging difficult.
+  // var fs = fullscreen();
+  // fullscreen(!fs);
 
-    var fs = fullscreen();
-    fullscreen(!fs);
+}
 
-  }
+let Word = function (theWord, preLifeFrames) {
 
-var Word = function(theWord){
+  this.size = floor(random(40) + 42);
+  this.word = theWord;
+  this.x = random(windowWidth);
+  this.y = random(windowHeight);
+  this.life = 255.;
+  this.tick = random(1.) + 0.5;
 
-    this.size =  floor(random(40)+42);
-    this.word = theWord;
-    this.x = random(windowWidth);
-    this.y = random(windowHeight);
-    this.life =255.;
-    this.tick = random(1.)+0.5;
+  this.isBorn = false;
+  this.preLife = preLifeFrames;
+
+
 };
-Word.prototype.run = function() {
+Word.prototype.run = function () {
   this.update();
   this.display();
 };
-Word.prototype.display = function(){
+Word.prototype.display = function () {
   textSize(this.size);
   textAlign(CENTER);
   textFont(myFont);
   fill(this.life, this.life, this.life);
-  text(this.word, this.x, this.y );
+  text(this.word, this.x, this.y);
+
+
 
 };
 
-Word.prototype.update = function(){
+Word.prototype.birth = function () {
+  this.isBorn = true;
+
+
+}
+
+Word.prototype.talk = function () {
+
+}
+
+Word.prototype.update = function () {
   this.life = this.life - this.tick;
 };
 
-Word.prototype.isDead = function(){
+Word.prototype.isDead = function () {
   if (this.life < 0) {
     return true;
   } else {
@@ -77,30 +96,55 @@ Word.prototype.isDead = function(){
   }
 };
 
-var WordSystem = function() {
-    this.words = [];
-  };
+let WordSystem = function () {
+  this.words = [];
+};
 
-  WordSystem.prototype.addWord = function(newWord) {
-    var theNewWord = new Word(newWord)
-    this.words.push(theNewWord);
-    // this.words.unshift(theNewWord);
-  };
+WordSystem.prototype.addWord = function (newWord, index) {
+  let tempWord = new Word(newWord, index * 8);
+  this.words.push(tempWord);
 
-  WordSystem.prototype.run = function() {
-    for (var i = this.words.length-1; i >= 0; i--) {
-      var w = this.words[i];
+
+
+  // setTimeout(function () {
+  //   //console.log(newWord)
+  //   this.words.push(new Word(newWord));
+  //   console.log(index * 200 + 1)
+  // }, index * 200 + 1);
+
+};
+
+WordSystem.prototype.run = function () {
+  for (var i = this.words.length - 1; i >= 0; i--) {
+    let w = this.words[i];
+
+    if (w.isBorn) {
       w.run();
       if (w.isDead()) {
+        this.words[i] = null;
         this.words.splice(i, 1);
       }
+    } else {
+
+
+      if (w.preLife == 0) {
+        w.isBorn = true;
+        if (!responsiveVoice.isPlaying()) {
+          responsiveVoice.speak(w.word);
+        }
+      } else {
+        w.preLife--
+      }
+
     }
-  };
+
+  }
+};
 
 function draw() {
- clear();
-  background(0, 0 ,0);
-wordSystem.run();
-// console.log(wordSystem.words.length);
+  clear();
+  background(0, 0, 0);
+  wordSystem.run();
+  // console.log(wordSystem.words.length);
 
 }
