@@ -1,8 +1,6 @@
 const audioSystem = function (numVoxes) {
 
-    this.voices = ["UK English Female", "UK English Male", "US English Female",
-        "Spanish Female", "French Female", "Deutsch Female",
-        "Italian Female", "Greek Female"];
+    this.voices = ["UK English Female", "UK English Male", "US English Female"];
 
 
     this.voxBank = [];
@@ -15,9 +13,9 @@ const audioSystem = function (numVoxes) {
 }
 
 audioSystem.prototype.talk = function (message) {
-    let vType = Math.floor(Math.random() * 8);
-    let vPitch = Math.random() * 2
-    let vGain = 0.1;
+    let vType = Math.floor(Math.random() * this.voices.length);
+    let vPitch = Math.random() * 1 + 0.5;
+    let vGain = 0.2;
     console.log("talk :: " + message + " :: " + vType + " :: " + vPitch)
     hasSpoken = false;
 
