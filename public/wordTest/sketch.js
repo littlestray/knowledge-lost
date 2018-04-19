@@ -13,10 +13,10 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  
+
   background(0);
 
-  var socket = io.connect('http://localhost:2222');
+  var socket = io.connect('http://localhost:2223');
   socket.on('connect', function (data) {
     socket.emit('join', 'Hello World from client');
     socket.on('deletions', socketUpdate);
@@ -33,8 +33,8 @@ function socketUpdate(obj) {
       if (frameRate() > 15) {
         //console.log(i + " IIII ")
           setTimeout(displayWord, i * 333, obj[Thelist[0]][i]);
-        
-        
+
+
       }
     }
   }
@@ -65,11 +65,11 @@ function displayWord(theWord) {
 
 
 function draw() {
-  
-  background(0, 0, 0, 4);
-  
-  
 
-  
+  background(0, 0, 0, 4);
+
+
+
+
 
 }
