@@ -1,8 +1,8 @@
 {
-	"name" : "KnowledgeLost",
+	"name" : "KnowledgeLost_Max",
 	"version" : 1,
-	"creationdate" : -690924958,
-	"modificationdate" : -690923680,
+	"creationdate" : -690925079,
+	"modificationdate" : 3606979935,
 	"viewrect" : [ 532.0, 85.0, 576.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -12,8 +12,7 @@
 		"patchers" : 		{
 			"knowLostC.maxpat" : 			{
 				"kind" : "patcher",
-				"local" : 1,
-				"toplevel" : 1
+				"local" : 1
 			}
 ,
 			"knowLostJ.maxpat" : 			{

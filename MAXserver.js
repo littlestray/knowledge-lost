@@ -20,6 +20,8 @@ var server = require('http').createServer(app);
 //    });
 //
 //  });
+var deletionBank = [];
+
 server.listen(2222);
 
 app.use(bodyParser.json());
@@ -31,17 +33,28 @@ app.post('/', (req, res) => {
 
       for (var i = 0; i < req.body[Thelist[0]].length; i++) {
         if (req.body[Thelist[0]][i]) {
-
-            client.send ("/deletions", req.body[Thelist[0]][i], i );          
+          var TempDeleted = {}
+          TempDeleted.deletion = req.body[Thelist[0]][i];
+          TempDeleted.prelife = i*8;
+          deletionBank.push(TempDeleted);
         }
       }
 
 
     // io.sockets.emit('deletions', req.body);
     console.log(req.body);
-})
+});
 
 
+(function(){
+
+    for (var i = 0; i < TempDeleted.length; i++) {
+      TempDeleted[i]
+    }
+    setTimeout(arguments.callee, 13);
+})();
+
+// client.send ("/deletions",
 
 app.listen(3666);
 
