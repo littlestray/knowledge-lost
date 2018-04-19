@@ -21,21 +21,21 @@ var server = require('http').createServer(app);
 //
 //  });
 var deletionBank = [];
-
+var shouldWipe = false;
 server.listen(2222);
 
 app.use(bodyParser.json());
 app.post('/', (req, res) => {
     res.send("Success!");
 
-
+    shouldWipe = false;
       var Thelist = Object.keys(req.body);
 
       for (var i = 0; i < req.body[Thelist[0]].length; i++) {
         if (req.body[Thelist[0]][i]) {
           var TempDeleted = {}
           TempDeleted.deletion = req.body[Thelist[0]][i];
-          TempDeleted.prelife = i*8;
+          TempDeleted.prelife = i*13;
           deletionBank.push(TempDeleted);
         }
       }
@@ -48,13 +48,24 @@ app.post('/', (req, res) => {
 
 (function(){
 
-    for (var i = 0; i < TempDeleted.length; i++) {
-      TempDeleted[i]
+  for (var i = deletionBank.length - 1; i >= 0; i--) {
+    deletionBank[i].prelife --;
+  if (deletionBank[i].prelife <= 0) {
+    client.send ("/deletions", deletionBank[i].deletion);
+    deletionBank[i] = null;
+    deletionBank.splice(i, 1);
+    shouldWipe = true;
     }
+    if (deletionBank.length < 1 && shouldWipe){
+      client.send ("/wipe", "bang");
+      shouldWipe = false;
+    }
+  }
+    console.log("deletionbank length: "+deletionBank.length);
     setTimeout(arguments.callee, 13);
 })();
 
-// client.send ("/deletions",
+
 
 app.listen(3666);
 

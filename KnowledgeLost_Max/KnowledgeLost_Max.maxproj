@@ -1,8 +1,8 @@
 {
 	"name" : "KnowledgeLost_Max",
 	"version" : 1,
-	"creationdate" : -690925079,
-	"modificationdate" : 3606979935,
+	"creationdate" : -690925200,
+	"modificationdate" : 3606983934,
 	"viewrect" : [ 532.0, 85.0, 576.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -28,6 +28,14 @@
 		}
 ,
 		"externals" : 		{
+
+		}
+,
+		"other" : 		{
+			"Glass_TTY_VT220.ttf" : 			{
+				"kind" : "file",
+				"local" : 1
+			}
 
 		}
 
