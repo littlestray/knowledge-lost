@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ -1406.0, 514.0, 892.0, 787.0 ],
+		"rect" : [ 34.0, 79.0, 1212.0, 967.0 ],
 		"bgcolor" : [ 0.572549, 0.47451, 0.447059, 1.0 ],
 		"editing_bgcolor" : [ 0.572549, 0.47451, 0.447059, 1.0 ],
 		"bglocked" : 0,
@@ -2009,7 +2009,7 @@
 			}
 , 			{
 				"box" : 				{
-					"attr" : "fullscreen",
+					"attr" : "fsmenubar",
 					"id" : "obj-26",
 					"maxclass" : "attrui",
 					"numinlets" : 1,
