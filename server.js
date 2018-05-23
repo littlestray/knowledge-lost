@@ -195,7 +195,7 @@ function getChanges() {
 
                     linksAccesed.push(list[x]);
 
-                    
+
                         let req = https.get("https://en.wikipedia.org" + list[x], (res) => {
                             //console.log('statusCode:' + res.statusCode + " " + x);
 
@@ -207,7 +207,7 @@ function getChanges() {
                             })
 
                             res.on('end', () => {
-                                console.log(res.req._header);
+                                console.log("headey: "+res.req._header);
                                 resolve(getKnowledgeLost(page));
 
                             })
@@ -217,7 +217,7 @@ function getChanges() {
                             })
 
                         })
-                    
+
                     //console.log("listing!");
                 }
             }
