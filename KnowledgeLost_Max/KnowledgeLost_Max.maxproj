@@ -2,8 +2,8 @@
 	"name" : "KnowledgeLost_Max",
 	"version" : 1,
 	"creationdate" : -690925382,
-	"modificationdate" : 3609870674,
-	"viewrect" : [ 532.0, 85.0, 576.0, 500.0 ],
+	"modificationdate" : -684874572,
+	"viewrect" : [ 177.0, 73.0, 576.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
 	"showdependencies" : 1,
@@ -29,6 +29,11 @@
 				"kind" : "patcher",
 				"local" : 1
 			}
+,
+			"flipbookMaker.maxpat" : 			{
+				"kind" : "patcher",
+				"local" : 1
+			}
 
 		}
 ,
@@ -37,6 +42,10 @@
 		}
 ,
 		"code" : 		{
+			"oldPageGen.js" : 			{
+				"kind" : "javascript",
+				"local" : 1
+			}
 
 		}
 ,
