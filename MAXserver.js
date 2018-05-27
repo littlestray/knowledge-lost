@@ -61,7 +61,7 @@ app.post('/', (req, res) => {
       shouldWipe = false;
     }
   }
-    console.log("deletionbank length: "+deletionBank.length);
+    //console.log("deletionbank length: "+deletionBank.length);
     setTimeout(arguments.callee, 13);
 })();
 
