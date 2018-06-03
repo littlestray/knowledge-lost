@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>DUMP BUMP</title>
+
+  </head>
+  <body>
+    <script type="text/javascript" src="https://cycling74.s3.amazonaws.com/download/xebra.js"></script>
+    <p> OH HEyY </p>
+    <script>
+      var xebraState = new Xebra.State({
+        hostname: "127.0.0.1",
+        port: 8086,
+        supported_objects: Xebra.SUPPORTED_OBJECTS
+      });
+xebraState.connect();
+
+
+function testing(){
+  xebraState.sendMessageToChannel("testing", "hello")
+}
+    </script>
+<button onclick="testing()">Test!</button>
+  </body>
+</html>

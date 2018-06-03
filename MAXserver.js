@@ -35,6 +35,7 @@ app.post('/', (req, res) => {
         if (req.body[Thelist[0]][i]) {
           var TempDeleted = {}
           TempDeleted.deletion = req.body[Thelist[0]][i];
+          TempDeleted.deletion.replace(/[^A-Za-z 0-9 \.,\?""!]*/g, '') ; 
           TempDeleted.prelife = i*13;
           deletionBank.push(TempDeleted);
         }
@@ -42,7 +43,7 @@ app.post('/', (req, res) => {
 
 
     // io.sockets.emit('deletions', req.body);
-    console.log(req.body);
+    //console.log(req.body);
 });
 
 
@@ -52,6 +53,7 @@ app.post('/', (req, res) => {
     deletionBank[i].prelife --;
   if (deletionBank[i].prelife <= 0) {
     client.send ("/deletions", deletionBank[i].deletion);
+    console.log(deletionBank[i].deletion);
     deletionBank[i] = null;
     deletionBank.splice(i, 1);
     shouldWipe = true;
@@ -61,7 +63,7 @@ app.post('/', (req, res) => {
       shouldWipe = false;
     }
   }
-    console.log("deletionbank length: "+deletionBank.length);
+    //console.log("deletionbank length: "+deletionBank.length);
     setTimeout(arguments.callee, 13);
 })();
 

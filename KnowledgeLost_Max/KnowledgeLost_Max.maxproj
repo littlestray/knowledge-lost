@@ -1,8 +1,8 @@
 {
 	"name" : "KnowledgeLost_Max",
 	"version" : 1,
-	"creationdate" : -690925382,
-	"modificationdate" : -684874572,
+	"creationdate" : -690925503,
+	"modificationdate" : 3610105200,
 	"viewrect" : [ 177.0, 73.0, 576.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -31,6 +31,11 @@
 			}
 ,
 			"flipbookMaker.maxpat" : 			{
+				"kind" : "patcher",
+				"local" : 1
+			}
+,
+			"redaction.maxpat" : 			{
 				"kind" : "patcher",
 				"local" : 1
 			}
